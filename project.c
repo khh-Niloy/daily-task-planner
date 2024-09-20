@@ -5,6 +5,7 @@
     // global declaration
     char task[100][100];
     char completedTaskList[100];
+    char deleteTaskNumber[100];
     int taskCount= 0;
 
 
@@ -26,7 +27,12 @@ void viewTask(){
             }
             printf("\n\n");
 
-            for ( int i = 0; i<taskCount; i++ ) {
+
+
+            for ( int i = 0; i<taskCount-strlen(deleteTaskNumber); i++ ) {
+                if ( deleteTaskNumber[i] == completedTaskList[i] ) {
+                    completedTaskList[i] = 0;
+                }
                 if ( completedTaskList[i] == 1 ) {
                     printf("%d. %s(completed)\n",i+1, task[i]);
                 }
@@ -41,15 +47,12 @@ void viewTask(){
             }
             printf("\n\n");
 
-            printf("to add task press 2\n");
-            printf("4. Mark task as completed\n");
-
-            printf("press 3 for exit\n");
-
+            printf("2. Add new task\n");
+            printf("3. Mark task as completed\n");
+            printf("4. delete task\n");
+            printf("5. Exit\n\n");
         }
 }
-
-
 
 
 void addTask(){
@@ -62,15 +65,15 @@ void addTask(){
         task[taskCount][j] = ch[j];
     }
     task[taskCount][length] = '\0';
-    printf("\nlast added task -> %s\n\n", task[taskCount]);
+    printf("\nNewly added task -> %s\n\n", task[taskCount]);
     taskCount++;
-    printf("to show list press 1\nto add task press 2\n");
-    printf("4. Mark task as completed\n");
-    printf("press 3 for exit\n");
+
+    printf("1. Your current tasks\n");
+    printf("2. Add new task\n");
+    printf("3. Mark task as completed\n");
+    printf("4. delete task\n");
+    printf("5. Exit\n\n");
 }
-
-
-
 
 
 void markCompletedTask(){
@@ -81,13 +84,13 @@ void markCompletedTask(){
     }
 
     else{
-        printf("\nWhich number you completed? ");
+        printf("\n\nEnter the task number to mark as completed:  ");
         scanf("%d", &completedTask);
         completedTaskList[completedTask-1] = 1;
 
         for ( int i = 0; i<taskCount; i++ ) {
             if ( completedTask == i+1 ) {
-                printf("%d. %s (this marked as completed)\n",i+1, task[i]);
+                printf("%d. %s (marked as completed)\n",i+1, task[i]);
             }
             else{
                 printf("%d. %s\n",i+1, task[i]);
@@ -95,12 +98,40 @@ void markCompletedTask(){
         }
 
         printf("\n\n\n");
-        printf("to show list press 1\nto add task press 2\n");
-        printf("press 3 for exit\n");    
+        printf("1. Your current tasks\n");
+        printf("2. Add new task\n");
+        printf("3. Mark task as completed\n");
+        printf("4. delete task\n");
+        printf("5. Exit\n\n");
     }
-    
-
 }
+
+
+void deleteTask(){
+    printf("\n\n");
+    int deleteTask;
+    printf("which number you want to delete? ");
+    scanf("%d", &deleteTask);
+
+    deleteTaskNumber[deleteTask-1] = 1;
+
+    for ( int i = deleteTask; i<taskCount; i++ ) {
+        strcpy(task[i-1], task[i]);
+    }
+    taskCount--;
+
+    for ( int i = 0; i<taskCount; i++ ) {
+        printf("%d. %s\n",i+1, task[i]);
+    }
+
+    printf("\n\n\n");
+    printf("1. Your current tasks\n");
+    printf("2. Add new task\n");
+    printf("3. Mark task as completed\n");
+    printf("4. delete task\n");
+    printf("5. Exit\n\n");
+}
+
 
 int main () {
 
@@ -174,14 +205,15 @@ int main () {
 
 
     printf("\nTo-Do List Application:\n");
-    printf("1. View all tasks\n");
-    printf("2. Add a new task\n");
-    printf("4. Mark task as completed\n");
-    printf("3. Exit\n\n");
+    printf("1. Your current tasks\n");
+    printf("2. Add new task\n");
+    printf("3. Mark task as completed\n");
+    printf("4. delete task\n");
+    printf("5. Exit\n\n");
     printf("Enter your choice: ");
 
     int choice = 0;
-    while ( choice!=3 ) {
+    while ( choice!=5 ) {
         scanf("%d", &choice);
         getchar();
 
@@ -193,9 +225,14 @@ int main () {
             addTask();
         }
 
-        else if ( choice == 4 ) {
+        else if ( choice == 3 ) {
             markCompletedTask();
         }
+        else if ( choice == 4 ) {
+            deleteTask();
+        }
+
+
 
     } //while
 
