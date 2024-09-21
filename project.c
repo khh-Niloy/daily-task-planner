@@ -2,11 +2,15 @@
 #include<string.h>
 #include <ctype.h>
 
-    // global declaration
-    char task[100][100];
-    char completedTaskList[100];
-    char deleteTaskNumber[100];
-    int taskCount= 0;
+// global declaration
+char task[100][100];
+char completedTaskList[100];
+char deleteTaskNumber[100];
+int taskCount= 0;
+char recentCompletedTask[100];
+
+
+int totalTaskIdeleted = 0;
 
 
 void viewTask(){
@@ -27,10 +31,17 @@ void viewTask(){
             }
             printf("\n\n");
 
+            // printf("%d", totalTaskIdeleted);
 
+            for ( int i = 0; i<taskCount; i++ ) {
 
-            for ( int i = 0; i<taskCount-strlen(deleteTaskNumber); i++ ) {
-                if ( deleteTaskNumber[i] == completedTaskList[i] ) {
+                if ( strcmp(recentCompletedTask, task[i]) == 0 ) {
+                    printf("%d. %s(completed)\n",i+1, task[i]);
+                }
+                else {
+                    printf("%d. %s\n",i+1, task[i]);
+                }
+                /* if ( deleteTaskNumber[i] == completedTaskList[i] ) {
                     completedTaskList[i] = 0;
                 }
                 if ( completedTaskList[i] == 1 ) {
@@ -38,7 +49,7 @@ void viewTask(){
                 }
                 else {
                     printf("%d. %s\n",i+1, task[i]);
-                }
+                } */
             }
 
             printf("\n\n");
@@ -86,16 +97,19 @@ void markCompletedTask(){
     else{
         printf("\n\nEnter the task number to mark as completed:  ");
         scanf("%d", &completedTask);
-        completedTaskList[completedTask-1] = 1;
+        // completedTaskList[completedTask-1] = 1;
+        strcpy(recentCompletedTask, task[completedTask-1]);
 
-        for ( int i = 0; i<taskCount; i++ ) {
+        printf("completed task: %s",recentCompletedTask);
+
+        /* for ( int i = 0; i<taskCount; i++ ) {
             if ( completedTask == i+1 ) {
                 printf("%d. %s (marked as completed)\n",i+1, task[i]);
             }
             else{
                 printf("%d. %s\n",i+1, task[i]);
             }
-        }
+        } */
 
         printf("\n\n\n");
         printf("1. Your current tasks\n");
@@ -113,16 +127,19 @@ void deleteTask(){
     printf("which number you want to delete? ");
     scanf("%d", &deleteTask);
 
-    deleteTaskNumber[deleteTask-1] = 1;
+    // deleteTaskNumber[deleteTask] = 1;
+    totalTaskIdeleted++;
+    char recentDeleted[100];
+    strcpy(recentDeleted, task[deleteTask-1]);
 
     for ( int i = deleteTask; i<taskCount; i++ ) {
         strcpy(task[i-1], task[i]);
     }
+    printf("deleted task: %s",recentDeleted);
     taskCount--;
-
-    for ( int i = 0; i<taskCount; i++ ) {
+    /* for ( int i = 0; i<taskCount; i++ ) {
         printf("%d. %s\n",i+1, task[i]);
-    }
+    } */
 
     printf("\n\n\n");
     printf("1. Your current tasks\n");
@@ -231,10 +248,7 @@ int main () {
         else if ( choice == 4 ) {
             deleteTask();
         }
-
-
-
-    } //while
+    }
 
     
    
