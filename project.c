@@ -4,10 +4,13 @@
 
 // global declaration
 char task[100][100];
-char completedTaskList[100];
-char deleteTaskNumber[100];
 int taskCount= 0;
 char recentCompletedTask[100];
+
+char completedTaskList[100];
+char deleteTaskNumber[100];
+
+
 
 
 int totalTaskIdeleted = 0;
@@ -35,9 +38,13 @@ void viewTask(){
 
             for ( int i = 0; i<taskCount; i++ ) {
 
-                if ( strcmp(recentCompletedTask, task[i]) == 0 ) {
+                if ( completedTaskList[i] ==  1 ) {
                     printf("%d. %s(completed)\n",i+1, task[i]);
                 }
+
+                /* if ( strcmp(recentCompletedTask, task[i]) == 0 ) {
+                    printf("%d. %s(completed)\n",i+1, task[i]);
+                } */
                 else {
                     printf("%d. %s\n",i+1, task[i]);
                 }
@@ -52,7 +59,7 @@ void viewTask(){
                 } */
             }
 
-            printf("\n\n");
+            printf("\n");
             for ( int i = 0; i<20; i++ ) {
                 printf("-");
             }
@@ -102,6 +109,8 @@ void markCompletedTask(){
 
         printf("completed task: %s",recentCompletedTask);
 
+        completedTaskList[completedTask-1] = 1;
+
         /* for ( int i = 0; i<taskCount; i++ ) {
             if ( completedTask == i+1 ) {
                 printf("%d. %s (marked as completed)\n",i+1, task[i]);
@@ -122,7 +131,13 @@ void markCompletedTask(){
 
 
 void deleteTask(){
-    printf("\n\n");
+
+    if ( taskCount == 0 ) {
+        printf("No task added yet! Press 2 for adding task\n");
+    }
+
+    else {
+        printf("\n\n");
     int deleteTask;
     printf("which number you want to delete? ");
     scanf("%d", &deleteTask);
@@ -137,6 +152,10 @@ void deleteTask(){
     }
     printf("deleted task: %s",recentDeleted);
     taskCount--;
+
+    if ( completedTaskList[deleteTask-1] ==  recentDeleted[deleteTask-1]) {
+        completedTaskList[deleteTask-1] = 0;
+    }
     /* for ( int i = 0; i<taskCount; i++ ) {
         printf("%d. %s\n",i+1, task[i]);
     } */
@@ -147,6 +166,7 @@ void deleteTask(){
     printf("3. Mark task as completed\n");
     printf("4. delete task\n");
     printf("5. Exit\n\n");
+    }
 }
 
 
@@ -170,7 +190,7 @@ int main () {
     char username[20];
     gets(username);
 
-    printf("Enter password: (maximum 8 char, must have one character and one digit and one uppercase letter)\n");
+    printf("Enter password: (minimum 8 char, must have one character and one digit and one uppercase letter)\n\n");
 
     int flag = -1;
     while ( flag != 0 ) {
@@ -183,26 +203,44 @@ int main () {
         gets(pass);
 
         for ( int i = 0; i<9; i++ ) {
-            if ( isalpha(pass[i]) && isupper(pass[i])) {
+            if ( isalpha(pass[i])) {
                 aplha++;
+            }
+            if (isupper(pass[i])) {
                 uppercase++;
             }
-            else if ( isdigit(pass[i]) ) {
+            if ( isdigit(pass[i]) ) {
                 digit++;
             }
         }
 
         if ( aplha > 0 && digit > 0 && uppercase > 0 && strlen(pass) >=8 ) {
             flag = 0;
+
+            printf("\n\n");
+            for ( int i = 0; i<20; i++ ) {
+                if ( i == 10 ) {
+                    printf("You successfully created an account!");
+                }
+                else {
+                    printf("-");
+                }
+            }
+
             printf("\nUsername -> ");
             puts(username);
-
+        
             printf("password -> ");
             for ( int i = 0; i<strlen(pass); i++ ) {
                 printf("*");
             }
 
-            printf("\n\nwrite y or Y to see your password\n");
+            printf("\n");
+            for ( int i = 0; i<(20+35); i++ ) {
+                printf("-");
+            }
+
+            printf("\n\nwrite y or Y to see your password: ");
             char ch;
             scanf("%c", &ch);
             if ( ch == 'Y' || ch == 'y' ) {
@@ -212,9 +250,23 @@ int main () {
                 printf("password -> ");
                 puts(pass);
             }
+
+
         }
+        
         else {
-            printf("failed to meet the criteria\n");
+            if ( aplha==0 ) {
+                printf("\nPlease add one letter\n\n");
+            }
+            if (digit==0) {
+                printf("\nPlease add digit\n\n");
+            }
+            if (uppercase==0) {
+                printf("\nPlease add one uppercase letter\n\n");
+            }
+            if (strlen(pass) < 8) {
+                printf("\nminimum 8 letter!\n\n");
+            }
             flag = -1;
         }
     } */
@@ -222,6 +274,7 @@ int main () {
 
 
     printf("\nTo-Do List Application:\n");
+    printf("Date: 23 Sept, 2024\n");
     printf("1. Your current tasks\n");
     printf("2. Add new task\n");
     printf("3. Mark task as completed\n");
