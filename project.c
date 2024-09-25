@@ -153,9 +153,7 @@ void deleteTask(){
     printf("deleted task: %s",recentDeleted);
     taskCount--;
 
-    if ( completedTaskList[deleteTask-1] ==  recentDeleted[deleteTask-1]) {
-        completedTaskList[deleteTask-1] = 0;
-    }
+    completedTaskList[deleteTask-1] = 0;
     /* for ( int i = 0; i<taskCount; i++ ) {
         printf("%d. %s\n",i+1, task[i]);
     } */
