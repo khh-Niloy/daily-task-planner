@@ -86,11 +86,11 @@ void addTask(){
 
 void markCompletedTask(){
     int completedTask;
-    listedCompletedTaskCounter++;
     if ( taskCount == 0 ) {
         printf("No task added yet! Press 2 for adding task\n");
     }
     else{
+        listedCompletedTaskCounter++;
         printf("\n\nEnter the task number to mark as completed:  ");
         scanf("%d", &completedTask);
 
@@ -98,7 +98,7 @@ void markCompletedTask(){
         printf("completed task: %s",recentCompletedTask);
         completedTaskList[completedTask-1] = 1;
 
-        strcpy(listedCompletedTask[listedCompletedTaskCounter], task[completedTask-1]);
+        strcpy(listedCompletedTask[listedCompletedTaskCounter-1], recentCompletedTask);
 
         printf("\n\n\n");
         printf("\n\n\n");
@@ -172,7 +172,7 @@ void listOfAllCompletedTask(){
 
 
         for ( int i = 0; i<listedCompletedTaskCounter; i++ ) {
-            printf("%d. %s", i+1, listedCompletedTask[listedCompletedTaskCounter]);
+            printf("%d. %s", i+1, listedCompletedTask[i]);
         }
 
 
