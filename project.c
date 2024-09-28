@@ -13,6 +13,9 @@ char deleteTaskNumber[100];
 char listedCompletedTask[100][100];
 int listedCompletedTaskCounter = 0;
 
+char listedDeletedTask[100][100];
+int listedDeletedTaskCounter = 0;
+
 int totalTaskIdeleted = 0;
 
 
@@ -36,7 +39,7 @@ void viewTask(){
             for ( int i = 0; i<taskCount; i++ ) {
 
                 if ( completedTaskList[i] ==  1 ) {
-                    printf("%d. %s(completed)\n",i+1, task[i]);
+                    printf("\xE2\x9C\x85 %d. %s \n", i + 1, task[i]);
                 }
                 else {
                     printf("%d. %s\n",i+1, task[i]);
@@ -120,6 +123,7 @@ void deleteTask(){
         printf("No task added yet! Press 2 for adding task\n");
     }
     else {
+        listedDeletedTaskCounter++;
         printf("\n\n");
         int deleteTask;
         printf("which number you want to delete? ");
@@ -132,10 +136,12 @@ void deleteTask(){
         for ( int i = deleteTask; i<taskCount; i++ ) {
             strcpy(task[i-1], task[i]);
         }
-        printf("deleted task: %s",recentDeleted);
+        printf("\n\n\u274C deleted task: %s",recentDeleted);
 
         taskCount--;
         completedTaskList[deleteTask-1] = 0;
+
+        strcpy(listedDeletedTask[listedDeletedTaskCounter-1], recentDeleted);
 
         printf("\n\n\n");
         printf("1. Your current tasks\n");
@@ -195,39 +201,45 @@ void listOfAllCompletedTask(){
 
 
 void listOfAllDeletedTask(){
-    printf("\n\n");
-    for ( int i = 0; i<10; i++ ) {
-        if ( i == 5 ) {
-             printf("All deleted task list");
-
+    if ( taskCount == 0 ) {
+        printf("No task added yet! Press 2 for adding task\n");
+    }
+    else if (listedDeletedTaskCounter == 0) {
+        printf("No task deleted yet! Press 4 for adding deleted task\n");
+    }
+    else{
+        printf("\n\n");
+        for ( int i = 0; i<10; i++ ) {
+            if ( i == 5 ) {
+                printf("All deleted task list");
+            }
+            else {
+                printf("-");
+            }
         }
-        else {
+        printf("\n\n");
+
+
+        for ( int i = 0; i<listedDeletedTaskCounter; i++ ) {
+            printf("%d. %s", i+1, listedDeletedTask[i]);
+        }
+
+
+        printf("\n");
+        for ( int i = 0; i<32; i++ ) {
             printf("-");
         }
+        printf("\n\n");
+
+        printf("1. Your current tasks\n");
+        printf("2. Add new task\n");
+        printf("3. Mark task as completed\n");
+        printf("4. delete task\n");
+        printf("5. All completed task\n");
+        printf("6. All deleted task\n");
+        printf("7. Exit\n\n");
+        printf("Enter your choice: ");
     }
-    printf("\n\n");
-
-
-
-
-
-
-
-
-    printf("\n");
-    for ( int i = 0; i<10; i++ ) {
-        printf("-");
-    }
-    printf("\n\n");
-
-    printf("1. Your current tasks\n");
-    printf("2. Add new task\n");
-    printf("3. Mark task as completed\n");
-    printf("4. delete task\n");
-    printf("5. All completed task\n");
-    printf("6. All deleted task\n");
-    printf("7. Exit\n\n");
-    printf("Enter your choice: ");
 }
 
 
