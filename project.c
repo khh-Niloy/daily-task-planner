@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 // global declaration
-char task[100][100];
+/* char task[100][100];
 int taskCount= 0;
 char recentCompletedTask[100];
 
@@ -241,16 +241,16 @@ void listOfAllDeletedTask(){
         printf("Enter your choice: ");
     }
 }
-
+ */
 
 
 int main () {
 
     // username and pass
-    /* printf("\n\n");
+    printf("\n\n");
     for ( int i = 0; i<20; i++ ) {
         if ( i == 10 ) {
-            printf("Log in");
+            printf("Registration Form");
         }
         else {
             printf("-");
@@ -258,13 +258,37 @@ int main () {
     }
     printf("\n\n");
 
-    printf("Enter Username: ");
-    char username[20];
-    gets(username);
+    printf("Enter your email: ");
 
-    printf("Enter password: (minimum 8 char, must have one character and one digit and one uppercase letter)\n\n");
+    char username[20];
+    int presentAtChar = 0;
+    int emailCheckMessageFlag = 0;
+    int flag2 = -1;
+    
+    while (flag2 != 0){
+        gets(username);
+
+        for ( int i = 0; i<strlen(username); i++ ) {
+            if (username[i] == '@') {
+                presentAtChar++;
+                flag2 = 0;
+            }
+        }
+
+        if (presentAtChar == 0) {
+            if (emailCheckMessageFlag == 0) {
+                printf("Please enter a valid email address.\n");
+            }
+            emailCheckMessageFlag++;
+        }
+    }
+
+
+    printf("\n\nPassword requirements: Minimum 8 characters, including one letter, one digit, and one uppercase letter\n\n");
+    printf("Enter Password:\n");
 
     int flag = -1;
+    int passCheckMessageFlag = 0;
     while ( flag != 0 ) {
 
         int aplha = 0;
@@ -274,7 +298,7 @@ int main () {
         char pass[100];
         gets(pass);
 
-        for ( int i = 0; i<9; i++ ) {
+        for ( int i = 0; i<strlen(pass); i++ ) {
             if ( isalpha(pass[i])) {
                 aplha++;
             }
@@ -327,36 +351,30 @@ int main () {
         }
         
         else {
-            if ( aplha==0 ) {
-                printf("\nPlease add one letter\n\n");
-            }
-            if (digit==0) {
-                printf("\nPlease add digit\n\n");
-            }
-            if (uppercase==0) {
-                printf("\nPlease add one uppercase letter\n\n");
-            }
-            if (strlen(pass) < 8) {
-                printf("\nminimum 8 letter!\n\n");
+            if (aplha==0 || digit==0 || uppercase==0 || strlen(pass) < 8) {
+                passCheckMessageFlag++;
+                if (passCheckMessageFlag == 1) {
+                    printf("\nPlease meet the requirements\n");
+                }
             }
             flag = -1;
         }
-    } */
+    }
 
 
 
-    printf("\nTo-Do List Application:\n");
-    printf("Date: 23 Sept, 2024\n");
-    printf("1. Your current tasks\n");
-    printf("2. Add new task\n");
-    printf("3. Mark task as completed\n");
-    printf("4. delete task\n");
-    printf("5. All completed task\n");
-    printf("6. All deleted task\n");
-    printf("7. Exit\n\n");
-    printf("Enter your choice: ");
+    // printf("\nTo-Do List Application:\n");
+    // printf("Date: 23 Sept, 2024\n");
+    // printf("1. Your current tasks\n");
+    // printf("2. Add new task\n");
+    // printf("3. Mark task as completed\n");
+    // printf("4. delete task\n");
+    // printf("5. All completed task\n");
+    // printf("6. All deleted task\n");
+    // printf("7. Exit\n\n");
+    // printf("Enter your choice: ");
 
-    int choice = 0;
+    /* int choice = 0;
     while ( choice!=7 ) {
         scanf("%d", &choice);
         getchar();
@@ -381,7 +399,7 @@ int main () {
         else if ( choice == 6 ) {
             listOfAllDeletedTask();
         }
-    }
+    } */
 
    return 0;
 }
