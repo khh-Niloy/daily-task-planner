@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<string.h>
 #include <ctype.h>
+#include <conio.h>
+
 
 // global declaration
 /* char task[100][100];
@@ -296,7 +298,27 @@ int main () {
         int uppercase = 0;
 
         char pass[100];
-        gets(pass);
+        char passCh;
+        int i = 0;
+        while(1){
+            passCh = _getch();
+
+            if (passCh == '\r') {
+                pass[i] = '\0';
+                break;
+            }
+            else if (passCh == '\b' && i > 0) {
+                printf("\b \b");
+                i--;
+            }
+            else if (passCh != '\b'){
+                pass[i] = passCh;
+                printf("*");
+                i++;
+            }
+        }
+
+        printf("\n");
 
         for ( int i = 0; i<strlen(pass); i++ ) {
             if ( isalpha(pass[i])) {
@@ -323,7 +345,7 @@ int main () {
                 }
             }
 
-            printf("\nUsername -> ");
+            printf("\nEmail -> ");
             puts(username);
         
             printf("password -> ");
