@@ -5,7 +5,7 @@
 
 
 // global declaration
-/* char task[100][100];
+ char task[100][100];
 int taskCount= 0;
 char recentCompletedTask[100];
 
@@ -243,13 +243,46 @@ void listOfAllDeletedTask(){
         printf("Enter your choice: ");
     }
 }
- */
+ 
+
+void search(){
+    printf("\nPlease enter the task you're looking for: ");
+    char SearchCh[100];
+	fgets(SearchCh, 100, stdin);
+
+    char storeSearchedTask[100][100];
+    printf("\n");
+    SearchCh[strcspn(SearchCh, "\n")] = '\0';
+
+    int found = 0;
+    for ( int i = 0; i<taskCount; i++ ) {
+        if(strstr(task[i], SearchCh) != NULL){
+            strcpy(storeSearchedTask[i], task[i]);
+            found++;
+        }
+    }
+    printf("\n");
+    for ( int i = 0; i<found; i++ ) {
+        printf("%d. %s\n", i+1,storeSearchedTask[i]);
+    }
+
+    for (int i = 0; i < found; i++) {
+        storeSearchedTask[i][0] = '\0';
+    }
+
+    if ( found == 0 ) {
+        printf("No matching task found.Please press 8 to try again.\n\n");
+    }
+    else{
+        printf("press 8 to try again: ");
+    }
+}
 
 
 int main () {
 
     // username and pass
-    printf("\n\n");
+    /* printf("\n\n");
     for ( int i = 0; i<20; i++ ) {
         if ( i == 10 ) {
             printf("Registration Form");
@@ -383,20 +416,21 @@ int main () {
         }
     }
 
+ */
 
+     printf("\nTo-Do List Application:\n");
+    printf("Date: 23 Sept, 2024\n");
+    printf("1. Your current tasks\n");
+    printf("2. Add new task\n");
+    printf("3. Mark task as completed\n");
+    printf("4. delete task\n");
+    printf("5. All completed task\n");
+    printf("6. All deleted task\n");
+    printf("Search\n");
+    printf("7. Exit\n\n");
+    printf("Enter your choice: "); 
 
-    // printf("\nTo-Do List Application:\n");
-    // printf("Date: 23 Sept, 2024\n");
-    // printf("1. Your current tasks\n");
-    // printf("2. Add new task\n");
-    // printf("3. Mark task as completed\n");
-    // printf("4. delete task\n");
-    // printf("5. All completed task\n");
-    // printf("6. All deleted task\n");
-    // printf("7. Exit\n\n");
-    // printf("Enter your choice: ");
-
-    /* int choice = 0;
+     int choice = 0;
     while ( choice!=7 ) {
         scanf("%d", &choice);
         getchar();
@@ -421,7 +455,10 @@ int main () {
         else if ( choice == 6 ) {
             listOfAllDeletedTask();
         }
-    } */
+        else if ( choice == 8 ) {
+            search();
+        }
+    } 
 
    return 0;
 }
